@@ -3,6 +3,10 @@
 /backend/node_modules
 /node_modules
 
+# Config files
+/backend/config/*
+/frontend/src/config/*
+/frontend/src/config/
 # Environment variables
 .env*.local
 .env

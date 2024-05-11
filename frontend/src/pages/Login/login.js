@@ -3,6 +3,8 @@ import { Box, TextField, Button, Grid, Paper, Typography, MenuItem, FormControl,
 import { useNavigate } from 'react-router-dom';
 import './login.css';
 import Message from '../../components/Message/message';
+import userLogin from '../../functions/loginUser';
+
 
 const Login = () => {
 
@@ -29,8 +31,9 @@ const Login = () => {
         setPassword(event.target.value);
     }
 
-    const loginButtonPress = (event) => {
+    const loginButtonPress = async (event) => {
         setSubmitClicked(true);
+        await userLogin(email, password, accountType);
     }
 
     return (
