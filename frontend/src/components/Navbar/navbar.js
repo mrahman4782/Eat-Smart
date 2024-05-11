@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -23,10 +23,16 @@ import { useNavigate } from 'react-router-dom';
  */
 const Navbar = (loggedIn, type='surfer') => {
 
+    let navigate = useNavigate();
     const hamburger = ['Login', 'Register'];
     
-    const [anchorElMenu, setAnchorElMenu] = React.useState(null);
+    const [anchorElMenu, setAnchorElMenu] = useState(null);
     const open = Boolean(anchorElMenu);
+
+    const hamburgerToRouting = {
+        'Login': '/login',
+        'Register': '/register'
+    }
 
     const handleOpenMenu = (event) => {
       setAnchorElMenu(event.currentTarget);
