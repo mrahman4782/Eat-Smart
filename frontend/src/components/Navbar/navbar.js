@@ -42,7 +42,7 @@ const Navbar = (loggedIn, type='surfer', page='') => {
 
     return (
         <React.Fragment>
-            <AppBar position="static" sx={{ backgroundColor: '#f0f0f0' }}>
+            <AppBar position="fixed" sx={{ backgroundColor: '#1B1C1E' }}>
                 <Toolbar>
                     <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
                         <IconButton size="large" edge="end" color="inherit" aria-label="menu" sx={{ mr: 1, p: 0 }}>
@@ -50,7 +50,7 @@ const Navbar = (loggedIn, type='surfer', page='') => {
                         </IconButton>
                     </Box>
                         <IconButton size="large" edge="end" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={handleOpenMenu}>
-                            <MenuIcon sx={{ color: 'black' }}/>
+                            <MenuIcon sx={{ color: 'white' }}/>
                         </IconButton>
                         <Menu
                         anchorEl={anchorElMenu}
