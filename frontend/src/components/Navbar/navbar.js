@@ -12,16 +12,16 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from 'react-router-dom';
 
 
 /**
  * Navigation component declaration & configuratios to always be displayed on the site 
  * @param {boolean} loggedIn - Keeps track of whether or not the user has logged in
  * @param {string} type - User type. Default set to surfer
- * @param {string} page - Current user page. Default set to ''
  * @returns Navbar component
  */
-const Navbar = (loggedIn, type='surfer', page='') => {
+const Navbar = (loggedIn, type='surfer') => {
 
     const hamburger = ['Login', 'Register'];
     
@@ -36,9 +36,6 @@ const Navbar = (loggedIn, type='surfer', page='') => {
       setAnchorElMenu(null);
     };
 
-    if (page == 'register'){
-
-    }
 
     return (
         <React.Fragment>

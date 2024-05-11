@@ -11,3 +11,19 @@
   font-family: 'Juana-Thin';
   src: url('/fonts/juana-thin-it.otf') format('truetype');
 }
+
+@font-face {
+  font-family: 'Nantes-Light';
+  src: url('/fonts/nantes-light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Nantes-Regular';
+  src: url('/fonts/nantes-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Nantes-Heavy';
+  src: url('/fonts/nantes-bold.ttf') format('truetype');
+}
+
