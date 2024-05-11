@@ -13,7 +13,7 @@ function App() {
 
   return (
     <Router>
-      <Navbar loggedIn={isLoggedIn}/>
+      <Navbar />
       <Routes>
         <Route path='/' element={<Landing/>} />
         <Route path='/login' element={<Login/>} />
