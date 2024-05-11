@@ -3,22 +3,22 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar/navbar';
 import Home from './pages/Home/home';
 import Landing from './pages/Landing/landing';
+import Register from './pages/Register/register';
+import Login from './pages/Login/login';
 
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState('surfer');
-  const {routeName, setRouteName} = useState('');
-
-  const getRouteName = (route) => {
-    setRouteName(`${route}`);
-  }
 
   return (
     <Router>
-      <Navbar loggedIn={isLoggedIn} page={routeName}/>
+      <Navbar loggedIn={isLoggedIn}/>
       <Routes>
         <Route path='/' element={<Landing/>} />
+        <Route path='/login' element={<Login/>} />
+        <Route path='/register' element={<Register/>} />
+        <Route path='/home' element={<Home/>} />
       </Routes>
     </Router>
   );

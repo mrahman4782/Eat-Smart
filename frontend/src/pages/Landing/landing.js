@@ -10,8 +10,8 @@ const Landing = () => {
           <Grid item xs={12} sm={6} style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '50px' }}>
             <img className="logoImg" src="./icons/logo-full-nobg.png" alt="Logo" />
           </Grid>
-          <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',  padding: 30 }}>
-            <Typography variant="h4" sx={{color: 'white'}}>
+          <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',  padding: 20, paddingRight: 30 }}>
+            <Typography variant="h4" sx={{color: 'white', fontFamily: 'Juana-Light', fontStyle: 'italic', textAlign: 'center'}}>
             Embark on a culinary adventure where healthy delights await at our doorstep.
             </Typography>
             <Grid container style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
