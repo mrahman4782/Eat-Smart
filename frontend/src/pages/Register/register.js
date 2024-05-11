@@ -44,12 +44,14 @@ const Register = () => {
 
     const registerButtonPress = (event) => {
         setSubmitClicked(true);
+        console.log('Secret key')
     }
 
     return (
         
         <Box sx={{ flexGrow: 1, height: '100vh', margin: 0 }}>
         <Grid container alignItems="center" justifyContent="center" style={{ height: '100%', margin: 0 }}>
+            <Message message="Hello"/>
             {!submitClicked ? 
                        <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F9F6F0', margin: 0, height: '100vh'}}>
                        <Typography variant="h3" sx={{color: 'black', fontFamily: 'Juana-Light', marginTop: 13, marginRight: '22vw'}}>
