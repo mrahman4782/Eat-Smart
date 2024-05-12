@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 
-const Home = () => {
+function Home () {
 
     return (
         <h1>
