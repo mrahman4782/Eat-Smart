@@ -5,6 +5,10 @@ import Home from './pages/Home/home';
 import Landing from './pages/Landing/landing';
 import Register from './pages/Register/register';
 import Login from './pages/Login/login';
+import ShowProduct from './pages/Product/ShowProduct';
+import CreateProduct from './pages/Product/CreateProduct';
+import OrderProduct from "./pages/Product/OrderProduct";
+import CheckOut from "./pages/Product/CheckOut";
 
 function App() {
 
@@ -19,6 +23,11 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/home' element={<Home/>} />
+        <Route path='/product/show' element={<ShowProduct/>} />
+        <Route path='/product/create' element={<CreateProduct/>} />
+        <Route path='/product/order' element={<OrderProduct/>} />
+        <Route path='/product/checkout' element={<CheckOut/>} />
+
       </Routes>
     </Router>
   );
