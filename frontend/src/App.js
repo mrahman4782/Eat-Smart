@@ -5,7 +5,8 @@ import Home from './pages/Home/home';
 import Landing from './pages/Landing/landing';
 import Register from './pages/Register/register';
 import Login from './pages/Login/login';
-
+import ShowProduct from './pages/Product/ShowProduct';
+import CreateProduct from './pages/Product/CreateProduct';
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,6 +20,8 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/home' element={<Home/>} />
+        <Route path='/product/show' element={<ShowProduct/>} />
+        <Route path='/product/create' element={<CreateProduct/>} />
       </Routes>
     </Router>
   );
