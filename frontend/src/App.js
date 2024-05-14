@@ -12,6 +12,9 @@ import CheckOut from "./pages/Product/CheckOut";
 import Ordered from "./pages/User/Ordered";
 import Profile from "./pages/User/Profile";
 import Billing from "./pages/User/Billing";
+import FeedBack from "./pages/User/Feedback";
+import HandlingFeedbacks from "./pages/Manager/HandlingFeedbacks";
+import NutritionFacts from "./pages/Product/NutritionFacts";
 
 function App() {
 
@@ -31,10 +34,14 @@ function App() {
         <Route path='/product/create' element={<CreateProduct/>} />
         <Route path='/product/order' element={<OrderProduct/>} />
         <Route path='/product/checkout' element={<CheckOut/>} />
+        <Route path='/product/nutritionfacts' element={<NutritionFacts/>} />
         // User
         <Route path='/user/ordered' element={<Ordered/>} />
         <Route path='/user/Profile' element={<Profile/>} />
         <Route path='/user/billing' element={<Billing/>} />
+        <Route path='/user/feedback' element={<FeedBack/>} />
+        <Route path='/manager/handlingfeedbacks' element={<HandlingFeedbacks/>} />
+        
 
       </Routes>
     </Router>
