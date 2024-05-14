@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-
-const defaultItems = [
-  { name: 'Apple', count: 1, price: 19.99 },
-  { name: 'Carrot', count: 1, price: 15.99 },
-  { name: 'Milk', count: 1, price: 9.99 }
-];
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const CheckOut = () => {
-  const [selectedItems, setSelectedItems] = useState(defaultItems);
+  const location = useLocation();
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  useEffect(() => {
+    if (location.state && location.state.selectedItems) {
+      setSelectedItems(location.state.selectedItems);
+    }
+  }, [location.state]);
 
   const incrementCount = (itemName) => {
     setSelectedItems((prevItems) => 
