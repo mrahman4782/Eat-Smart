@@ -1,46 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
 import Layout from './Layout';
 import Profile from './Profile';
 import Billing from './Billing';
-
-const foodData = [
-  {
-    date: '2024-05-01',
-    orders: [
-      {
-        orderNumber: 'Order 1',
-        items: [
-          { name: 'Apple', count: 2, price: 19.99 },
-          { name: 'Banana', count: 1, price: 15.99 }
-        ]
-      },
-      {
-        orderNumber: 'Order 2',
-        items: [
-          { name: 'Banana', count: 1, price: 15.99 },
-          { name: 'Spinach', count: 2, price: 12.99 }
-        ]
-      }
-    ]
-  },
-  {
-    date: '2024-05-02',
-    orders: [
-      {
-        orderNumber: 'Order 3',
-        items: [
-          { name: 'Milk', count: 1, price: 9.99 },
-          { name: 'Cheese', count: 2, price: 19.99 }
-        ]
-      }
-    ]
-  }
-];
+import axios from 'axios';
 
 const Ordered = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [foodData, setFoodData] = useState([]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get('https://your-backend-endpoint.com/orders');
+        setFoodData(response.data);
+      } catch (error) {
+        console.error('There was an error fetching the orders!', error);
+      }
+    };
+
+    fetchOrders();
+  }, []);
 
   const handleReorder = (orderItems) => {
     navigate('/product/order', { state: { selectedItems: orderItems } });

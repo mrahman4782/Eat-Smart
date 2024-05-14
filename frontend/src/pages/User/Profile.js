@@ -1,27 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
 import Layout from './Layout';
 import Billing from './Billing';
 import Ordered from './Ordered';
-
-const profileData = {
-  name: 'John Doe',
-  email: 'john.doe@example.com',
-  phone: '+1 234 567 890',
-  address: '123 Main St, Springfield, IL',
-  preferences: {
-    newsletter: true,
-    notifications: false,
-    darkMode: true
-  }
-};
-
-const handleUpdate = (field) => {
-  alert(`Update ${field}`);
-};
+import axios from 'axios';
 
 const Profile = () => {
   const location = useLocation();
+  const [profileData, setProfileData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    preferences: {
+      newsletter: false,
+      notifications: false,
+      darkMode: false
+    }
+  });
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get('https://your-backend-endpoint.com/profile');
+        setProfileData(response.data);
+      } catch (error) {
+        console.error('There was an error fetching the profile data!', error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
+  const handleUpdate = (field) => {
+    alert(`Update ${field}`);
+  };
 
   return (
     <Layout>

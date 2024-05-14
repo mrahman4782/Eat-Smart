@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios'; // Import axios for making HTTP requests
 
 const CheckOut = () => {
   const location = useLocation();
@@ -36,6 +37,26 @@ const CheckOut = () => {
       shipping: 0,
       total: subtotal + taxes
     };
+  };
+
+  const handleCheckOut = async () => {
+    const totals = getTotal();
+    const data = {
+      items: selectedItems,
+      subtotal: totals.subtotal,
+      taxes: totals.taxes,
+      shipping: totals.shipping,
+      total: totals.total
+    };
+
+    try {
+      const response = await axios.post('https://your-backend-endpoint.com/checkout', data);
+      // Handle the response from the backend if needed
+      console.log(response.data);
+    } catch (error) {
+      // Handle any errors
+      console.error('There was an error processing the checkout!', error);
+    }
   };
 
   const totals = getTotal();
@@ -112,7 +133,10 @@ const CheckOut = () => {
                 <span className="font-semibold">Total</span>
                 <span className="font-semibold">${totals.total.toFixed(2)}</span>
               </div>
-              <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">
+              <button
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full"
+                onClick={handleCheckOut}
+              >
                 CheckOut
               </button>
             </div>
