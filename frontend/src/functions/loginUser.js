@@ -3,11 +3,15 @@ import axios from 'axios';
 import sessionStorage from './sessionStorage.js';
 import { FIREBASE_APP, FIREBASE_AUTH } from "./firebaseInit.js";
 
+let outputMsg = {
+  data: '',
+  status: ''
+}
 
 export async function userLogin(email, password, type) {
   try {
     const userCredential = await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
-    
+    console.log(userCredential);
     // Signed in
     const user = userCredential.user;
     console.log('Signed in!');
@@ -17,14 +21,17 @@ export async function userLogin(email, password, type) {
 
     // Store Async session token to Async Storage
     sessionStorage.setSessionKey(token);
-    return token;
+
+    outputMsg.data = token;
+    outputMsg.status = 200;
+
+    return outputMsg;
 
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log("Error Code: ", errorCode);
-    console.log("Error Msg: ", errorMessage);
-    throw error;
+    outputMsg.data = error;
+    outputMsg.status = 400;
+    console.log(outputMsg);
+    return outputMsg;
   }
 }
 
