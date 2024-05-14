@@ -30,7 +30,7 @@ app.use(express.json());
 
 // Get functions
 app.get('/', (req, res) => {
-    res.status(200).send(`<h1>Successfully Connected to Server</h1>`);
+  res.status(200).send(`<h1>Successfully Connected to Server</h1>`);
 });
 
 // Retrieve importers
@@ -113,7 +113,7 @@ app.post("/api/getMenu", async (req, res) => {
   console.log(req);
   let returnMessage = await getMenu();
   console.log(returnMessage);
-  res.status(returnMessage.status).send(returnMessage.data);
+  res.status(returnMessage.status).json(returnMessage.data);
 });
 
 // Chef remove item from menu
@@ -140,10 +140,6 @@ app.post("/api/submitComplaint", async (req, res) => {
   res.status(returnMessage.status).send(returnMessage.data);
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
 // Importer submit a complaint about a chef
 app.post("/api/submitImporterComplaint", async (req, res) => {
   console.log(req);
@@ -156,4 +152,41 @@ app.post("/api/submitImporterComplaint", async (req, res) => {
   let returnMessage = await submitImporterComplaint(token, complaintText, chefId);
   console.log(returnMessage);
   res.status(returnMessage.status).send(returnMessage.data);
+});
+
+app.post('/feedback', async (req, res) => {
+  try {
+    const { productName, productId, rating } = req.body;
+    const feedbackDoc = await db.collection('feedback').add({
+      productName,
+      productId,
+      rating,
+      timestamp: new Date()
+    });
+    res.status(200).send(`Feedback submitted with ID: ${feedbackDoc.id}`);
+  } catch (error) {
+    res.status(500).send(`Error submitting feedback: ${error}`);
+  }
+});
+
+
+//Endpoint to get all feedbacks with product details
+app.get('/feedbacks', async (req, res) => {
+    try {
+        const feedbacksSnapshot = await db.collection('feedback').get();
+        const feedbacksList = await Promise.all(feedbacksSnapshot.docs.map(async (doc) => {
+            const feedback = doc.data();
+            const productSnapshot = await db.collection('specials').doc(feedback.productId).get();
+            const productData = productSnapshot.data();
+            return { id: doc.id, ...feedback, product: productData };
+        }));
+        res.status(200).json(feedbacksList);
+    } catch (error) {
+        res.status(500).send(`Error fetching feedbacks: ${error}`);
+    }
+});
+
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

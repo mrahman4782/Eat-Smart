@@ -32,21 +32,21 @@ function App() {
         <Route path='/register' element={<Register/>} />
         <Route path='/home' element={<Home/>} />
         // Products
-        <Route path='/product/show' element={<ShowProduct/>} /> //Not working
+        <Route path='/product/show' element={<ShowProduct/>} />
         <Route path='/product/create' element={<CreateProduct/>} />
         <Route path='/product/order' element={<OrderProduct/>} />
         <Route path='/product/checkout' element={<CheckOut/>} />
         <Route path='/product/nutritionfacts' element={<NutritionFacts/>} />
         // User
-        <Route path='/user/ordered' element={<Ordered/>} />
+        <Route path='/user/ordered' element={<Ordered/>} /> //
         <Route path='/user/profile' element={<Profile/>} />
         <Route path='/user/billing' element={<Billing/>} />
         <Route path='/user/feedback' element={<FeedBack/>} />
-        <Route path='/manager/handlingfeedbacks' element={<HandlingFeedbacks/>} /> //Not working
+        <Route path='/manager/handlingfeedbacks' element={<HandlingFeedbacks/>} /> //
         
         // Chef
-        <Route path='/chef/complain' element={<ComplainChef/>} />
-        <Route path='/importer/complain' element={<ComplainImporter/>} />
+        <Route path='/chef/complain' element={<ComplainChef/>} />//
+        <Route path='/importer/complain' element={<ComplainImporter/>} />//
         
 
 
