@@ -87,13 +87,13 @@ const CreateProduct = () => {
     }
   });
   const [name, setName] = useState('')
-  const [tag, setTag] = useState('')
+  const [tag, setTag] = useState([])
   const [price, setPrice] = useState('')
   const [calories, setCalories] = useState('')
   const [protein, setProtein] = useState('')
   const [carbs, setCarbs] = useState('')
   const [fat, setFat] = useState('')
-
+  const [field, setField] = useState({})
   const [openDropdown, setOpenDropdown] = useState(null);
   const [nutritionDropdownOpen, setNutritionDropdownOpen] = useState(false);
 
@@ -137,14 +137,26 @@ const CreateProduct = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();  
+    let newItem = {
+      name: name,
+      price: price,
+      calories: calories,
+      carbs: carbs,
+      fat: fat,
+      protein: protein,
+      rating: '4.3',
+      score: "43",
+      votes: "10",
+      tags: tag,
+    };
+
     try {
-      const response = await axios.post('/api/createproducts', productData);
-      alert(response.data);
+      await createProduct(newItem);
+      console.log("Done")
     } catch (error) {
-      console.error('Error adding product:', error);
-      alert('Error adding product');
+      console.log("error")
     }
   };
 
@@ -162,7 +174,7 @@ const CreateProduct = () => {
               name="name"
               id="name"
               value={name}
-              onChange={(event) => setName(event)}
+              onChange={(event) => setName(event.target.value)}
               placeholder="Name"
               className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               required
@@ -176,8 +188,8 @@ const CreateProduct = () => {
               type="text"
               name="description"
               id="description"
-              value={productData.description}
-              onChange={handleChange}
+              value={tag.join(" ")}
+              onChange={(event) => setTag(event.target.value.split(/\s+/))}
               placeholder="Enter description"
               className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               required
@@ -191,8 +203,8 @@ const CreateProduct = () => {
               type="number"
               name="price"
               id="price"
-              value={productData.price}
-              onChange={handleChange}
+              value={price}
+              onChange={(event) => setPrice(event.target.value)}
               placeholder="Enter price"
               className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
               required
@@ -210,22 +222,6 @@ const CreateProduct = () => {
               onChange={handleChange}
               placeholder="Enter image URL"
               className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-              required
-            />
-          </div>
-          <div className="mb-5">
-            <label htmlFor="discountedPrice" className="mb-3 block text-base font-medium text-[#07074D]">
-              Discounted Price
-            </label>
-            <input
-              type="number"
-              name="discountedPrice"
-              id="discountedPrice"
-              value={productData.discountedPrice}
-              onChange={handleChange}
-              placeholder="Enter discounted price"
-              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-              required
             />
           </div>
           <div className="mb-5">
@@ -289,8 +285,8 @@ const CreateProduct = () => {
                     type="number"
                     name="calories"
                     id="calories"
-                    value={productData.nutritionFacts.calories}
-                    onChange={handleNutritionChange}
+                    value={calories}
+                    onChange={(event) => setCalories(event.target.value)}
                     placeholder="Enter calories"
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   />
@@ -303,8 +299,8 @@ const CreateProduct = () => {
                     type="text"
                     name="totalFat"
                     id="totalFat"
-                    value={productData.nutritionFacts.totalFat}
-                    onChange={handleNutritionChange}
+                    value={fat}
+                    onChange={(event) => setFat(event.target.value)}
                     placeholder="Enter total fat"
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   />
@@ -319,8 +315,8 @@ const CreateProduct = () => {
                     type="text"
                     name="protein"
                     id="protein"
-                    value={productData.nutritionFacts.protein}
-                    onChange={handleNutritionChange}
+                    value={protein}
+                    onChange={(event) => setProtein(event.target.value)}
                     placeholder="Enter protein"
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   />
@@ -331,11 +327,11 @@ const CreateProduct = () => {
                   </label>
                   <input
                     type="text"
-                    name="iron"
-                    id="iron"
-                    value={productData.nutritionFacts.iron}
-                    onChange={handleNutritionChange}
-                    placeholder="Enter iron"
+                    name="carbs"
+                    id="carbs"
+                    value={carbs}
+                    onChange={(event) => setCarbs(event.target.value)}
+                    placeholder="Enter carbs"
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   />
                 </div>
@@ -346,6 +342,7 @@ const CreateProduct = () => {
             <button
               type="submit"
               className="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+              onClick={handleSubmit}
             >
               Add Product
             </button>

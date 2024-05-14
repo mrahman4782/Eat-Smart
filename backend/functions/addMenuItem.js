@@ -17,7 +17,7 @@ export async function addMenuItem(session, item) {
   // Verify the user is logged in and a Chef
   let checkUserLogin = await retrieveUserData(session);
 
-  if (checkUserLogin.data.type == 'Chef') {
+  if (checkUserLogin.data.type == 'chef') {
     try {
         const newItemRef = await db.collection("menu").add(item);
         response.status = 201;
