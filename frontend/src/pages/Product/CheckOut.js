@@ -2,12 +2,28 @@ import React, { useState } from 'react';
 
 const defaultItems = [
   { name: 'Apple', count: 1, price: 19.99 },
-  { name: 'Carrot', count: 3, price: 15.99 },
-  { name: 'Milk', count: 5, price: 9.99 }
+  { name: 'Carrot', count: 1, price: 15.99 },
+  { name: 'Milk', count: 1, price: 9.99 }
 ];
 
 const CheckOut = () => {
-  const [selectedItems] = useState(defaultItems);
+  const [selectedItems, setSelectedItems] = useState(defaultItems);
+
+  const incrementCount = (itemName) => {
+    setSelectedItems((prevItems) => 
+      prevItems.map(item =>
+        item.name === itemName ? { ...item, count: item.count + 1 } : item
+      )
+    );
+  };
+
+  const decrementCount = (itemName) => {
+    setSelectedItems((prevItems) => 
+      prevItems.map(item =>
+        item.name === itemName && item.count > 0 ? { ...item, count: item.count - 1 } : item
+      )
+    );
+  };
 
   const getTotal = () => {
     const subtotal = selectedItems.reduce((acc, item) => acc + item.price * item.count, 0);
@@ -49,7 +65,23 @@ const CheckOut = () => {
                           </div>
                         </td>
                         <td className="py-4">${item.price.toFixed(2)}</td>
-                        <td className="py-4 text-center">{item.count}</td>
+                        <td className="py-4">
+                          <div className="flex items-center">
+                            <button
+                              className="border rounded-md py-2 px-4 mr-2"
+                              onClick={() => decrementCount(item.name)}
+                            >
+                              -
+                            </button>
+                            <span className="text-center w-8">{item.count}</span>
+                            <button
+                              className="border rounded-md py-2 px-4 ml-2"
+                              onClick={() => incrementCount(item.name)}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </td>
                         <td className="py-4">${(item.price * item.count).toFixed(2)}</td>
                       </tr>
                     ))}
@@ -79,7 +111,7 @@ const CheckOut = () => {
                 <span className="font-semibold">${totals.total.toFixed(2)}</span>
               </div>
               <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">
-                Checkout
+                CheckOut
               </button>
             </div>
           </div>
