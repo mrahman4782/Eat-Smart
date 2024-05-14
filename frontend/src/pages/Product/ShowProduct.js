@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaQuestionCircle, FaAppleAlt } from 'react-icons/fa'; // Import icons from react-icons
 
 const products = [
   {
@@ -60,6 +61,14 @@ const ShowProduct = () => {
     navigate('/product/order', { state: { selectedItems: product.items } });
   };
 
+  const handleFeedbackClick = (product) => {
+    navigate('/user/feedback', { state: { productName: product.name } });
+  };
+
+  const handleCaloriesClick = (product) => {
+    navigate('/product/nutritionfacts', { state: { productName: product.name } });
+  };
+
   return (
     <div className='overflow-y-auto h-screen'>
       <div className="text-center pt-20 pb-10"> {/* Adjusted padding */}
@@ -73,7 +82,7 @@ const ShowProduct = () => {
         {products.map((product) => (
           <div
             key={product.id}
-            className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+            className="relative w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
             onMouseEnter={() => setHoveredProduct(product.id)}
             onMouseLeave={() => setHoveredProduct(null)}
             onClick={() => handleProductClick(product)}
@@ -100,6 +109,22 @@ const ShowProduct = () => {
                   </ul>
                 </div>
               )}
+            </div>
+            <div className="absolute top-2 right-2 flex space-x-2">
+              <FaQuestionCircle 
+                className="w-6 h-6 text-gray-500 cursor-pointer hover:text-indigo-500" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleFeedbackClick(product);
+                }} 
+              />
+              <FaAppleAlt 
+                className="w-6 h-6 text-gray-500 cursor-pointer hover:text-indigo-500" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleCaloriesClick(product);
+                }} 
+              />
             </div>
           </div>
         ))}
