@@ -15,6 +15,7 @@ import Billing from "./pages/User/Billing";
 import FeedBack from "./pages/User/Feedback";
 import HandlingFeedbacks from "./pages/Manager/HandlingFeedbacks";
 import NutritionFacts from "./pages/Product/NutritionFacts";
+import Complain from "./pages/Chef/Complain";
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
         <Route path='/register' element={<Register/>} />
         <Route path='/home' element={<Home/>} />
         // Products
-        <Route path='/product/show' element={<ShowProduct/>} />
+        <Route path='/product/show' element={<ShowProduct/>} /> //Not working
         <Route path='/product/create' element={<CreateProduct/>} />
         <Route path='/product/order' element={<OrderProduct/>} />
         <Route path='/product/checkout' element={<CheckOut/>} />
@@ -40,9 +41,12 @@ function App() {
         <Route path='/user/Profile' element={<Profile/>} />
         <Route path='/user/billing' element={<Billing/>} />
         <Route path='/user/feedback' element={<FeedBack/>} />
-        <Route path='/manager/handlingfeedbacks' element={<HandlingFeedbacks/>} />
+        <Route path='/manager/handlingfeedbacks' element={<HandlingFeedbacks/>} /> //Not working
         
+        // Chef
+        <Route path='/chef/complain' element={<Complain/>} />
 
+        
       </Routes>
     </Router>
   );

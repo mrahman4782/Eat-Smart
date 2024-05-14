@@ -1,19 +1,19 @@
 import express from 'express';
-import {middlewareInit, logRequests, logSuccess, logFailure} from '../middleware/config.js';
-
-import { createUser } from "./registerUser.js";
-import {requestAccount} from "./requestAccount.js";
-import {loginVerify} from './loginVerify.js';
-import {retrieveUserData} from './getUserInfo.js';
-import {getMenu} from './getMenu.js';
-import {removeMenuItem} from './removeMenuItem.js';
-import {addMenuItem} from './addMenuItem.js';
-
+import { middlewareInit, logRequests, logSuccess, logFailure } from '../middleware/config.js';
 import dotenv from "dotenv";
 dotenv.config({ path: "../.env" });
 
-import {initializeFirebaseApp} from './firebaseInit.js';
+import { initializeFirebaseApp } from './firebaseInit.js';
 initializeFirebaseApp();
+
+import { createUser } from "./registerUser.js";
+import { requestAccount } from "./requestAccount.js";
+import { loginVerify } from './loginVerify.js';
+import { retrieveUserData } from './getUserInfo.js';
+import { getMenu } from './getMenu.js';
+import { removeMenuItem } from './removeMenuItem.js';
+import { addMenuItem } from './addMenuItem.js';
+import { submitComplaint } from './submitComplaint.js';
 
 const app = express();
 const port = 3001;
@@ -23,16 +23,17 @@ app.use(logRequests);
 app.use(logSuccess);
 app.use(logFailure);
 
+// Middleware to parse JSON bodies
+app.use(express.json());
+
 // Get functions
 app.get('/', (req, res) => {
     res.status(200).send(`<h1>Successfully Connected to Server</h1>`);
-  });
-
+});
 
 // Post functions
 
 // Manager deregister account
-
 
 // Manager register account after approval
 app.post("/api/registerUser", async (req, res) => {
@@ -83,7 +84,6 @@ app.post("/api/verifyLogin", async (req, res) => {
 });
 
 // Get user information
-
 app.post("/api/getUser", async (req, res) => {
   console.log(req);
   let token = req.body.token || req.query.token;
@@ -93,7 +93,6 @@ app.post("/api/getUser", async (req, res) => {
 });
 
 // Chef add item to menu
-
 app.post("/api/addMenuItem", async (req, res) => {
   console.log(req);
   let token = req.body.token || req.query.token;
@@ -104,7 +103,6 @@ app.post("/api/addMenuItem", async (req, res) => {
 });
 
 // Get all items from menu
-
 app.post("/api/getMenu", async (req, res) => {
   console.log(req);
   let returnMessage = await getMenu();
@@ -121,8 +119,20 @@ app.post("/api/removeMenuItem", async (req, res) => {
   console.log(returnMessage);
   res.status(returnMessage.status).send(returnMessage.data);
 });
-// 
 
+// User submit a complaint
+app.post("/api/submitComplaint", async (req, res) => {
+  console.log(req);
+
+  // Retrieve parameters from body
+  let token = req.body.token || req.query.token;
+  let complaintText = req.body.complaintText;
+  let selectedItems = req.body.selectedItems;
+
+  let returnMessage = await submitComplaint(token, complaintText, selectedItems);
+  console.log(returnMessage);
+  res.status(returnMessage.status).send(returnMessage.data);
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
