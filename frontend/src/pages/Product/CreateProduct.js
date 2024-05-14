@@ -64,16 +64,46 @@ const CreateProduct = () => {
     image: '',
     brand: '',
     discountedPrice: '',
-    items: []
+    chef: '',
+    items: [],
+    nutritionFacts: {
+      servingSize: '',
+      calories: '',
+      totalFat: '',
+      saturatedFat: '',
+      transFat: '',
+      cholesterol: '',
+      sodium: '',
+      totalCarbohydrates: '',
+      dietaryFiber: '',
+      sugars: '',
+      protein: '',
+      vitaminA: '',
+      vitaminC: '',
+      calcium: '',
+      iron: '',
+    }
   });
 
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [nutritionDropdownOpen, setNutritionDropdownOpen] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProductData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+  };
+
+  const handleNutritionChange = (e) => {
+    const { name, value } = e.target;
+    setProductData((prevData) => ({
+      ...prevData,
+      nutritionFacts: {
+        ...prevData.nutritionFacts,
+        [name]: value,
+      },
     }));
   };
 
@@ -110,8 +140,9 @@ const CreateProduct = () => {
   };
 
   return (
-    <div className="flex items-center justify-center p-12">
-      <div className="mx-auto w-full max-w-[550px] bg-white">
+    <div className="flex items-center justify-center p-12 h-screen overflow-y-auto mt-20">
+      <div className="mx-auto w-full max-w-[550px] bg-white mt-12 p-8 rounded-lg shadow-md">
+        <h1 className="text-2xl font-bold mb-8 text-center">Create Special</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-5">
             <label htmlFor="name" className="mb-3 block text-base font-medium text-[#07074D]">
@@ -205,6 +236,35 @@ const CreateProduct = () => {
           </div>
           <div className="mb-5">
             <label className="mb-3 block text-base font-medium text-[#07074D]">
+              Choose Chef
+            </label>
+            <div className="flex items-center space-x-4">
+              <label className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  name="chef"
+                  value="Chef 1"
+                  checked={productData.chef === 'Chef 1'}
+                  onChange={handleChange}
+                  className="form-radio"
+                />
+                <span className="text-[#6B7280]">Chef 1</span>
+              </label>
+              <label className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  name="chef"
+                  value="Chef 2"
+                  checked={productData.chef === 'Chef 2'}
+                  onChange={handleChange}
+                  className="form-radio"
+                />
+                <span className="text-[#6B7280]">Chef 2</span>
+              </label>
+            </div>
+          </div>
+          <div className="mb-5">
+            <label className="mb-3 block text-base font-medium text-[#07074D]">
               Items
             </label>
             <div className="flex space-x-3">
@@ -229,6 +289,232 @@ const CreateProduct = () => {
                 </li>
               ))}
             </ul>
+          </div>
+          <div className="mb-5">
+            <button
+              type="button"
+              onClick={() => setNutritionDropdownOpen(!nutritionDropdownOpen)}
+              className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center"
+            >
+              <span className="mr-1">Nutrition Facts (Optional)</span>
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+              </svg>
+            </button>
+            {nutritionDropdownOpen && (
+              <div className="mt-4 max-h-96 overflow-y-auto">
+                <div className="mb-3">
+                  <label htmlFor="servingSize" className="block text-base font-medium text-[#07074D]">
+                    Serving Size
+                  </label>
+                  <input
+                    type="text"
+                    name="servingSize"
+                    id="servingSize"
+                    value={productData.nutritionFacts.servingSize}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter serving size"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="calories" className="block text-base font-medium text-[#07074D]">
+                    Calories
+                  </label>
+                  <input
+                    type="number"
+                    name="calories"
+                    id="calories"
+                    value={productData.nutritionFacts.calories}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter calories"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="totalFat" className="block text-base font-medium text-[#07074D]">
+                    Total Fat
+                  </label>
+                  <input
+                    type="text"
+                    name="totalFat"
+                    id="totalFat"
+                    value={productData.nutritionFacts.totalFat}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter total fat"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="saturatedFat" className="block text-base font-medium text-[#07074D]">
+                    Saturated Fat
+                  </label>
+                  <input
+                    type="text"
+                    name="saturatedFat"
+                    id="saturatedFat"
+                    value={productData.nutritionFacts.saturatedFat}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter saturated fat"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="transFat" className="block text-base font-medium text-[#07074D]">
+                    Trans Fat
+                  </label>
+                  <input
+                    type="text"
+                    name="transFat"
+                    id="transFat"
+                    value={productData.nutritionFacts.transFat}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter trans fat"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="cholesterol" className="block text-base font-medium text-[#07074D]">
+                    Cholesterol
+                  </label>
+                  <input
+                    type="number"
+                    name="cholesterol"
+                    id="cholesterol"
+                    value={productData.nutritionFacts.cholesterol}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter cholesterol"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="sodium" className="block text-base font-medium text-[#07074D]">
+                    Sodium
+                  </label>
+                  <input
+                    type="number"
+                    name="sodium"
+                    id="sodium"
+                    value={productData.nutritionFacts.sodium}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter sodium"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="totalCarbohydrates" className="block text-base font-medium text-[#07074D]">
+                    Total Carbohydrates
+                  </label>
+                  <input
+                    type="text"
+                    name="totalCarbohydrates"
+                    id="totalCarbohydrates"
+                    value={productData.nutritionFacts.totalCarbohydrates}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter total carbohydrates"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="dietaryFiber" className="block text-base font-medium text-[#07074D]">
+                    Dietary Fiber
+                  </label>
+                  <input
+                    type="text"
+                    name="dietaryFiber"
+                    id="dietaryFiber"
+                    value={productData.nutritionFacts.dietaryFiber}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter dietary fiber"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="sugars" className="block text-base font-medium text-[#07074D]">
+                    Sugars
+                  </label>
+                  <input
+                    type="text"
+                    name="sugars"
+                    id="sugars"
+                    value={productData.nutritionFacts.sugars}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter sugars"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="protein" className="block text-base font-medium text-[#07074D]">
+                    Protein
+                  </label>
+                  <input
+                    type="text"
+                    name="protein"
+                    id="protein"
+                    value={productData.nutritionFacts.protein}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter protein"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="vitaminA" className="block text-base font-medium text-[#07074D]">
+                    Vitamin A
+                  </label>
+                  <input
+                    type="text"
+                    name="vitaminA"
+                    id="vitaminA"
+                    value={productData.nutritionFacts.vitaminA}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter vitamin A"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="vitaminC" className="block text-base font-medium text-[#07074D]">
+                    Vitamin C
+                  </label>
+                  <input
+                    type="text"
+                    name="vitaminC"
+                    id="vitaminC"
+                    value={productData.nutritionFacts.vitaminC}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter vitamin C"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="calcium" className="block text-base font-medium text-[#07074D]">
+                    Calcium
+                  </label>
+                  <input
+                    type="text"
+                    name="calcium"
+                    id="calcium"
+                    value={productData.nutritionFacts.calcium}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter calcium"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="iron" className="block text-base font-medium text-[#07074D]">
+                    Iron
+                  </label>
+                  <input
+                    type="text"
+                    name="iron"
+                    id="iron"
+                    value={productData.nutritionFacts.iron}
+                    onChange={handleNutritionChange}
+                    placeholder="Enter iron"
+                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                  />
+                </div>
+              </div>
+            )}
           </div>
           <div>
             <button

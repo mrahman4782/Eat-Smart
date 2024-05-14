@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-const FeedBack = ({ productName }) => {
+const FeedBack = () => {
+    const location = useLocation();
+    const { productName } = location.state || { productName: '' };
     const [rating, setRating] = useState(0);
 
     const handleRatingChange = (newRating) => {
@@ -17,7 +20,7 @@ const FeedBack = ({ productName }) => {
     };
 
     return (
-        <div className="max-w-xl mx-auto mt-16 flex w-full flex-col border rounded-lg bg-white p-8">
+        <div className="max-w-xl mx-auto mt-20 flex w-full flex-col border rounded-lg bg-white p-8 ">
             <h2 className="title-font mb-1 text-lg font-medium text-gray-900">Feedback</h2>
             <p className="mb-5 leading-relaxed text-gray-600">If you had any issues or you liked our product, please share with us!</p>
             <form onSubmit={handleSubmit}>
