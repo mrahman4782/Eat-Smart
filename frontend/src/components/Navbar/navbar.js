@@ -16,7 +16,8 @@ const Navbar = () => {
     const open = Boolean(anchorElMenu);
     const hamburgerToRouting = {
         'Login': '/login',
-        'Register': '/register'
+        'Register': '/register',
+        'Profile': '/user/profile',
     };
 
     const handleOpenMenu = (event) => {

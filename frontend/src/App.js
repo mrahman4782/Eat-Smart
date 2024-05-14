@@ -10,6 +10,8 @@ import CreateProduct from './pages/Product/CreateProduct';
 import OrderProduct from "./pages/Product/OrderProduct";
 import CheckOut from "./pages/Product/CheckOut";
 import Ordered from "./pages/User/Ordered";
+import Profile from "./pages/User/Profile";
+import Billing from "./pages/User/Billing";
 
 function App() {
 
@@ -31,6 +33,8 @@ function App() {
         <Route path='/product/checkout' element={<CheckOut/>} />
         // User
         <Route path='/user/ordered' element={<Ordered/>} />
+        <Route path='/user/Profile' element={<Profile/>} />
+        <Route path='/user/billing' element={<Billing/>} />
 
       </Routes>
     </Router>

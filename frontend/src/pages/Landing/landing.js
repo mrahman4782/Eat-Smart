@@ -13,7 +13,7 @@ const Landing = () => {
   }
 
   const navigateToHome = () => {
-    navigate('/home')
+    navigate('/product/show')
   }
 
     return (
