@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const foodData = [
   {
     type: 'Fruits',
-    items: ['Apple', 'Banana', 'Orange']
+    items: [
+      { name: 'Apple', price: 19.99 },
+      { name: 'Banana', price: 15.99 },
+      { name: 'Orange', price: 12.99 }
+    ]
   },
   {
     type: 'Vegetables',
-    items: ['Carrot', 'Broccoli', 'Spinach']
+    items: [
+      { name: 'Carrot', price: 9.99 },
+      { name: 'Broccoli', price: 8.99 },
+      { name: 'Spinach', price: 12.99 }
+    ]
   },
   {
     type: 'Dairy',
-    items: ['Milk', 'Cheese', 'Yogurt']
+    items: [
+      { name: 'Milk', price: 9.99 },
+      { name: 'Cheese', price: 19.99 },
+      { name: 'Yogurt', price: 6.99 }
+    ]
   }
 ];
 
@@ -35,7 +47,7 @@ const Dropdown = ({ type, items, isOpen, toggleDropdown, onItemClick }) => (
               className="bg-gray-200 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-700 py-2 px-4 block whitespace-no-wrap cursor-pointer"
               onClick={() => onItemClick(item)}
             >
-              {item}
+              {item.name}
             </a>
           </li>
         ))}
@@ -45,41 +57,48 @@ const Dropdown = ({ type, items, isOpen, toggleDropdown, onItemClick }) => (
 );
 
 const OrderProduct = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state && location.state.selectedItems) {
+      setSelectedItems(location.state.selectedItems);
+    }
+  }, [location.state]);
 
   const toggleDropdown = (type) => {
     setOpenDropdown(openDropdown === type ? null : type);
   };
 
   const handleItemClick = (item) => {
-    if (!selectedItems.some(selectedItem => selectedItem.name === item)) {
-      setSelectedItems((prevItems) => [
-        ...prevItems,
-        { name: item, count: 1, price: Math.random() * 20 + 1 } // Assume a random price for simplicity
-      ]);
+    const existingItem = selectedItems.find(selectedItem => selectedItem.name === item.name);
+    if (existingItem) {
+      setSelectedItems(selectedItems.map(selectedItem =>
+        selectedItem.name === item.name
+          ? { ...selectedItem, count: selectedItem.count + 1 }
+          : selectedItem
+      ));
+    } else {
+      setSelectedItems([...selectedItems, { ...item, count: 1 }]);
     }
   };
 
   const handleItemRemove = (itemName) => {
-    setSelectedItems((prevItems) => prevItems.filter(item => item.name !== itemName));
+    setSelectedItems(selectedItems.filter(item => item.name !== itemName));
   };
 
   const incrementCount = (itemName) => {
-    setSelectedItems((prevItems) => 
-      prevItems.map(item =>
-        item.name === itemName ? { ...item, count: item.count + 1 } : item
-      )
-    );
+    setSelectedItems(selectedItems.map(item =>
+      item.name === itemName ? { ...item, count: item.count + 1 } : item
+    ));
   };
 
   const decrementCount = (itemName) => {
-    setSelectedItems((prevItems) => 
-      prevItems.map(item =>
-        item.name === itemName && item.count > 1 ? { ...item, count: item.count - 1 } : item
-      )
-    );
+    setSelectedItems(selectedItems.map(item =>
+      item.name === itemName && item.count > 1 ? { ...item, count: item.count - 1 } : item
+    ));
   };
 
   const handleCheckout = () => {
