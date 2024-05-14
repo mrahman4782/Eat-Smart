@@ -5,7 +5,9 @@ import { createUser } from "./registerUser.js";
 import {requestAccount} from "./requestAccount.js";
 import {loginVerify} from './loginVerify.js';
 import {retrieveUserData} from './getUserInfo.js';
-
+import {getMenu} from './getMenu.js';
+import {removeMenuItem} from './removeMenuItem.js';
+import {addMenuItem} from './addMenuItem.js';
 
 import dotenv from "dotenv";
 dotenv.config({ path: "../.env" });
@@ -28,6 +30,9 @@ app.get('/', (req, res) => {
 
 
 // Post functions
+
+// Manager deregister account
+
 
 // Manager register account after approval
 app.post("/api/registerUser", async (req, res) => {
@@ -89,10 +94,34 @@ app.post("/api/getUser", async (req, res) => {
 
 // Chef add item to menu
 
-// Get all menu items
+app.post("/api/addMenuItem", async (req, res) => {
+  console.log(req);
+  let token = req.body.token || req.query.token;
+  let item = req.body.item || req.query.item;
+  let returnMessage = await addMenuItem(token, item);
+  console.log(returnMessage);
+  res.status(returnMessage.status).send(returnMessage.data);
+});
+
+// Get all items from menu
+
+app.post("/api/getMenu", async (req, res) => {
+  console.log(req);
+  let returnMessage = await getMenu();
+  console.log(returnMessage);
+  res.status(returnMessage.status).send(returnMessage.data);
+});
 
 // Chef remove item from menu
-
+app.post("/api/removeMenuItem", async (req, res) => {
+  console.log(req);
+  let token = req.body.token || req.query.token;
+  let itemId = req.body.itemId || req.query.itemId;
+  let returnMessage = await addMenuItem(token, itemId);
+  console.log(returnMessage);
+  res.status(returnMessage.status).send(returnMessage.data);
+});
+// 
 
 
 app.listen(port, () => {
