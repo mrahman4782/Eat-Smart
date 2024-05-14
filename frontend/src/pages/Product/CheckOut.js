@@ -41,7 +41,7 @@ const CheckOut = () => {
   const totals = getTotal();
 
   return (
-    <div className="bg-gray-100 h-screen py-8">
+    <div className="bg-gray-100 h-screen py-8 mt-10">
       <div className="container mx-auto px-4">
         <h1 className="text-2xl font-semibold mb-4">Shopping Cart</h1>
         <div className="flex flex-col md:flex-row gap-4">

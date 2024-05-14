@@ -13,7 +13,24 @@ const products = [
     items: [
       { name: 'Apple', count: 2, price: 19.99 },
       { name: 'Banana', count: 1, price: 15.99 }
-    ]
+    ],
+    nutritionFacts: {
+      servingSize: '1 cup (240g)',
+      calories: 200,
+      totalFat: '10g',
+      saturatedFat: '2g',
+      transFat: '0g',
+      cholesterol: '20mg',
+      sodium: '300mg',
+      totalCarbohydrates: '20g',
+      dietaryFiber: '2g',
+      sugars: '4g',
+      protein: '10g',
+      vitaminA: '8%',
+      vitaminC: '2%',
+      calcium: '6%',
+      iron: '4%',
+    }
   },
   {
     id: 2,
@@ -25,7 +42,24 @@ const products = [
     items: [
       { name: 'Carrot', count: 3, price: 9.99 },
       { name: 'Spinach', count: 1, price: 12.99 }
-    ]
+    ],
+    nutritionFacts: {
+      servingSize: '1 cup (240g)',
+      calories: 150,
+      totalFat: '5g',
+      saturatedFat: '1g',
+      transFat: '0g',
+      cholesterol: '10mg',
+      sodium: '200mg',
+      totalCarbohydrates: '15g',
+      dietaryFiber: '3g',
+      sugars: '5g',
+      protein: '8g',
+      vitaminA: '10%',
+      vitaminC: '5%',
+      calcium: '8%',
+      iron: '3%',
+    }
   },
   {
     id: 3,
@@ -37,7 +71,24 @@ const products = [
     items: [
       { name: 'Milk', count: 1, price: 9.99 },
       { name: 'Cheese', count: 2, price: 19.99 }
-    ]
+    ],
+    nutritionFacts: {
+      servingSize: '1 cup (240g)',
+      calories: 180,
+      totalFat: '8g',
+      saturatedFat: '3g',
+      transFat: '0g',
+      cholesterol: '15mg',
+      sodium: '250mg',
+      totalCarbohydrates: '12g',
+      dietaryFiber: '1g',
+      sugars: '10g',
+      protein: '12g',
+      vitaminA: '12%',
+      vitaminC: '0%',
+      calcium: '20%',
+      iron: '5%',
+    }
   },
   {
     id: 4,
@@ -49,9 +100,27 @@ const products = [
     items: [
       { name: 'Broccoli', count: 1, price: 8.99 },
       { name: 'Yogurt', count: 3, price: 6.99 }
-    ]
+    ],
+    nutritionFacts: {
+      servingSize: '1 cup (240g)',
+      calories: 220,
+      totalFat: '12g',
+      saturatedFat: '4g',
+      transFat: '0g',
+      cholesterol: '25mg',
+      sodium: '350mg',
+      totalCarbohydrates: '18g',
+      dietaryFiber: '2g',
+      sugars: '8g',
+      protein: '14g',
+      vitaminA: '15%',
+      vitaminC: '8%',
+      calcium: '10%',
+      iron: '6%',
+    }
   }
 ];
+
 
 const ShowProduct = () => {
   const navigate = useNavigate();
@@ -66,12 +135,12 @@ const ShowProduct = () => {
   };
 
   const handleCaloriesClick = (product) => {
-    navigate('/product/nutritionfacts', { state: { productName: product.name } });
+    navigate('/product/nutritionfacts', { state: { nutritionFacts: product.nutritionFacts } });
   };
 
   return (
     <div className='overflow-y-auto h-screen'>
-      <div className="text-center pt-20 pb-10"> {/* Adjusted padding */}
+      <div className="text-center pt-20 pb-10">
         <h1 className="font-bold text-4xl mb-4">Specials</h1>
       </div>
 
