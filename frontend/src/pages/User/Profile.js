@@ -1,54 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
 import Layout from './Layout';
-import Profile from './Profile';
 import Billing from './Billing';
+import Ordered from './Ordered';
 
-const foodData = [
-  {
-    date: '2024-05-01',
-    orders: [
-      {
-        orderNumber: 'Order 1',
-        items: [
-          { name: 'Apple', count: 2, price: 19.99 },
-          { name: 'Banana', count: 1, price: 15.99 }
-        ]
-      },
-      {
-        orderNumber: 'Order 2',
-        items: [
-          { name: 'Banana', count: 1, price: 15.99 },
-          { name: 'Spinach', count: 2, price: 12.99 }
-        ]
-      }
-    ]
-  },
-  {
-    date: '2024-05-02',
-    orders: [
-      {
-        orderNumber: 'Order 3',
-        items: [
-          { name: 'Milk', count: 1, price: 9.99 },
-          { name: 'Cheese', count: 2, price: 19.99 }
-        ]
-      }
-    ]
+const profileData = {
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+  phone: '+1 234 567 890',
+  address: '123 Main St, Springfield, IL',
+  preferences: {
+    newsletter: true,
+    notifications: false,
+    darkMode: true
   }
-];
+};
 
-const Ordered = () => {
-  const navigate = useNavigate();
+const handleUpdate = (field) => {
+  alert(`Update ${field}`);
+};
+
+const Profile = () => {
   const location = useLocation();
-
-  const handleReorder = (orderItems) => {
-    navigate('/product/order', { state: { selectedItems: orderItems } });
-  };
-
-  const calculateOrderPrice = (items) => {
-    return items.reduce((total, item) => total + item.count * item.price, 0).toFixed(2);
-  };
 
   return (
     <Layout>
@@ -78,51 +51,78 @@ const Ordered = () => {
         </nav>
       </aside>
       <div className="lg:col-span-9 p-6">
-        {foodData.map((orderDate, index) => (
-          <details key={index} className="mb-2">
-            <summary className="bg-gray-200 p-4 rounded-lg cursor-pointer shadow-md mb-4">
-              <span className="font-semibold text-2xl">{orderDate.date}</span>
-            </summary>
-            <ul className="ml-8 space-y-4">
-              {orderDate.orders.map((order, orderIndex) => (
-                <li key={orderIndex}>
-                  <details className="mb-2">
-                    <summary className="bg-gray-100 p-3 rounded-lg cursor-pointer shadow flex justify-between items-center">
-                      <div>
-                        <span className="font-semibold text-xl">{order.orderNumber}</span>
-                        <span className="text-lg text-gray-500 ml-4">Total: ${calculateOrderPrice(order.items)}</span>
-                      </div>
-                      <button
-                        onClick={() => handleReorder(order.items)}
-                        className="ml-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow"
-                      >
-                        Reorder
-                      </button>
-                    </summary>
-                    <ul className="ml-8 space-y-4">
-                      {order.items.map((item, itemIndex) => (
-                        <li key={itemIndex}>
-                          <details className="mb-2">
-                            <summary className="bg-gray-100 p-3 rounded-lg cursor-pointer shadow">
-                              <span className="font-semibold text-lg">{item.count} x {item.name}</span>
-                              <span className="text-lg text-gray-500 ml-4">${(item.count * item.price).toFixed(2)}</span>
-                            </summary>
-                            <div className="bg-white p-4">
-                              <p className="text-gray-800 text-lg">{item.description}</p>
-                            </div>
-                          </details>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                </li>
-              ))}
-            </ul>
-          </details>
-        ))}
+        <div className="mb-4">
+          <h2 className="text-3xl font-semibold text-gray-900">Profile Information</h2>
+          <div className="mt-4">
+            <p className="text-2xl font-medium">Name: {profileData.name}</p>
+            <button
+              onClick={() => handleUpdate('Name')}
+              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow"
+            >
+              Update Name
+            </button>
+          </div>
+          <div className="mt-4">
+            <p className="text-2xl font-medium">Email: {profileData.email}</p>
+            <button
+              onClick={() => handleUpdate('Email')}
+              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow"
+            >
+              Update Email
+            </button>
+          </div>
+          <div className="mt-4">
+            <p className="text-2xl font-medium">Phone: {profileData.phone}</p>
+            <button
+              onClick={() => handleUpdate('Phone')}
+              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow"
+            >
+              Update Phone
+            </button>
+          </div>
+          <div className="mt-4">
+            <p className="text-2xl font-medium">Address: {profileData.address}</p>
+            <button
+              onClick={() => handleUpdate('Address')}
+              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow"
+            >
+              Update Address
+            </button>
+          </div>
+        </div>
+        <div>
+          <h2 className="text-3xl font-semibold text-gray-900">Preferences</h2>
+          <div className="mt-4">
+            <p className="text-2xl font-medium">Newsletter: {profileData.preferences.newsletter ? 'Subscribed' : 'Not Subscribed'}</p>
+            <button
+              onClick={() => handleUpdate('Newsletter')}
+              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow"
+            >
+              Update Newsletter Subscription
+            </button>
+          </div>
+          <div className="mt-4">
+            <p className="text-2xl font-medium">Notifications: {profileData.preferences.notifications ? 'Enabled' : 'Disabled'}</p>
+            <button
+              onClick={() => handleUpdate('Notifications')}
+              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow"
+            >
+              Update Notifications
+            </button>
+          </div>
+          <div className="mt-4">
+            <p className="text-2xl font-medium">Dark Mode: {profileData.preferences.darkMode ? 'Enabled' : 'Disabled'}</p>
+            <button
+              onClick={() => handleUpdate('Dark Mode')}
+              className="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow"
+            >
+              Update Dark Mode
+            </button>
+          </div>
+        </div>
       </div>
     </Layout>
   );
 };
 
-export default Ordered;
+export default Profile;

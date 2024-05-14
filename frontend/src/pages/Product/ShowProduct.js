@@ -7,6 +7,8 @@ const products = [
     image: 'https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     brand: 'Brand 1',
     name: 'Product 1',
+    price: 149,
+    discountedPrice: 199,
     items: [
       { name: 'Apple', count: 2, price: 19.99 },
       { name: 'Banana', count: 1, price: 15.99 }
@@ -17,6 +19,8 @@ const products = [
     image: 'https://images.unsplash.com/photo-1651950519238-15835722f8bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjh8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     brand: 'Brand 2',
     name: 'Product 2',
+    price: 129,
+    discountedPrice: 149,
     items: [
       { name: 'Carrot', count: 3, price: 9.99 },
       { name: 'Spinach', count: 1, price: 12.99 }
@@ -27,6 +31,8 @@ const products = [
     image: 'https://images.unsplash.com/photo-1651950537598-373e4358d320?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8MjV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     brand: 'Brand 3',
     name: 'Product 3',
+    price: 99,
+    discountedPrice: 129,
     items: [
       { name: 'Milk', count: 1, price: 9.99 },
       { name: 'Cheese', count: 2, price: 19.99 }
@@ -37,20 +43,14 @@ const products = [
     image: 'https://images.unsplash.com/photo-1651950540805-b7c71869e689?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mjl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
     brand: 'Brand 4',
     name: 'Product 4',
+    price: 199,
+    discountedPrice: 249,
     items: [
       { name: 'Broccoli', count: 1, price: 8.99 },
       { name: 'Yogurt', count: 3, price: 6.99 }
     ]
   }
 ];
-
-// Calculate the discounted price for each product
-products.forEach(product => {
-  const totalPrice = product.items.reduce((sum, item) => sum + item.price * item.count, 0);
-  const discountedPrice = totalPrice * 0.9; // Apply a 10% discount
-  product.price = totalPrice.toFixed(2); // Store total price without discount
-  product.discountedPrice = discountedPrice.toFixed(2); // Store discounted price
-});
 
 const ShowProduct = () => {
   const navigate = useNavigate();
@@ -62,8 +62,8 @@ const ShowProduct = () => {
 
   return (
     <div className='overflow-y-auto h-screen'>
-      <div className="text-center p-10">
-        <h1 className="font-bold text-4xl mb-4">Available Products</h1>
+      <div className="text-center pt-20 pb-10"> {/* Adjusted padding */}
+        <h1 className="font-bold text-4xl mb-4">Specials</h1>
       </div>
 
       <section
@@ -94,7 +94,7 @@ const ShowProduct = () => {
                   <ul className="list-disc ml-4">
                     {product.items.map((item, index) => (
                       <li key={index} className="text-sm">
-                        {item.count} {item.name} (${item.price.toFixed(2)} each)
+                        {item.count} {item.name}
                       </li>
                     ))}
                   </ul>
