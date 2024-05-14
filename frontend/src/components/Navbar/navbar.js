@@ -34,6 +34,7 @@ const Navbar = () => {
                         // Set routes for importer
                     } else if (user.data.type === 'manager') {
                         // Set routes for manager
+                        setRoutes(['Logout', 'Profile', 'Accept Users', 'Report Review']);
                     }
                 } catch (error) {
                     console.error('Error fetching user:', error);
@@ -57,7 +58,8 @@ const Navbar = () => {
         'Create': '/product/create',
         'Order': '/product/order',
         'Checkout': '/product/checkout',
-        'Report Review': '/manager/handlingfeedbacks'
+        'Report Review': '/manager/handlingfeedbacks',
+        'Accept Users': '/manager/acceptusers'
     };
 
     const handleOpenMenu = (event) => {
