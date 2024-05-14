@@ -1,20 +1,34 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const FeedBack = () => {
     const location = useLocation();
     const { productName } = location.state || { productName: '' };
     const [rating, setRating] = useState(0);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
 
     const handleRatingChange = (newRating) => {
         setRating(newRating);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Process the form data here
-        console.log('Product:', productName);
-        console.log('Rating:', rating);
+        const data = {
+            productName: productName,
+            rating: rating
+        };
+
+        try {
+            const response = await axios.post('https://your-backend-endpoint.com/feedback', data);
+            setSuccess(true);
+            console.log(response.data);
+        } catch (error) {
+            console.error('There was an error sending the feedback!', error);
+            setError('There was an error sending your feedback. Please try again.');
+        }
+
         // Reset form after submission
         setRating(0);
     };
@@ -52,6 +66,8 @@ const FeedBack = () => {
                 </div>
                 <button type="submit" className="rounded border-0 bg-indigo-500 py-2 px-6 text-lg text-white hover:bg-indigo-600 focus:outline-none">Send</button>
             </form>
+            {success && <p className="mt-3 text-green-500">Thank you for your feedback!</p>}
+            {error && <p className="mt-3 text-red-500">{error}</p>}
             <p className="mt-3 text-xs text-gray-500">Feel free to connect with us on social media platforms.</p>
         </div>
     );
