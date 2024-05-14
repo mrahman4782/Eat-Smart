@@ -33,7 +33,7 @@ const Login = () => {
     const loginButtonPress = async (event) => {
         setSubmitClicked(true);
         let ouput = await userLogin(email, password, accountType);
-        navigate('/home');
+        //navigate('/home');
     }
 
     return (
