@@ -2,7 +2,10 @@ import express from 'express';
 import {middlewareInit, logRequests, logSuccess, logFailure} from '../middleware/config.js';
 
 import { createUser } from "./registerUser.js";
-import {requestAccount} from "./requestAccount.js"
+import {requestAccount} from "./requestAccount.js";
+import {loginVerify} from './loginVerify.js';
+import {retrieveUserData} from './getUserInfo.js';
+
 
 import dotenv from "dotenv";
 dotenv.config({ path: "../.env" });
@@ -26,7 +29,7 @@ app.get('/', (req, res) => {
 
 // Post functions
 
-// Manager request account after approval
+// Manager register account after approval
 app.post("/api/registerUser", async (req, res) => {
   console.log(req);
 
@@ -47,7 +50,7 @@ app.post("/api/registerUser", async (req, res) => {
 // User submit register request for an account
 app.post("/api/requestAccount", async (req, res) => {
   console.log(req);
-  
+
   // Retrieve parameters from either query or body
   let email = req.body.email || req.query.email;
   let password = req.body.password || req.query.password;
@@ -61,6 +64,36 @@ app.post("/api/requestAccount", async (req, res) => {
   console.log(checkUserLogin);
   res.status(checkUserLogin.status).send(`Registered request submitted!`);
 });
+
+// Verify that a user's login session is active
+app.post("/api/verifyLogin", async (req, res) => {
+  console.log(req);
+  let token = req.body.token || req.query.token;
+  let checkUserLogin = await loginVerify(token);
+
+  console.log(checkUserLogin);
+  res
+    .status(checkUserLogin.status)
+    .send(`Logged in! Expiration time: ${checkUserLogin.data.exp}`);
+});
+
+// Get user information
+
+app.post("/api/getUser", async (req, res) => {
+  console.log(req);
+  let token = req.body.token || req.query.token;
+  let returnMessage = await retrieveUserData(token);
+  console.log(returnMessage);
+  res.status(returnMessage.status).send(returnMessage.data);
+});
+
+// Chef add item to menu
+
+// Get all menu items
+
+// Chef remove item from menu
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

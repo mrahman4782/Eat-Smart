@@ -4,7 +4,6 @@ import admin from 'firebase-admin'; // Import the default export for auth
 
 
 import {initializeFirebaseApp} from './firebaseInit.js';
-
 initializeFirebaseApp();
 
 const db = getFirestore();
@@ -44,6 +43,8 @@ export async function createUser(email, password, username, deposit, type, token
     data.username = username;
     data.balance = deposit;
     data.type = type;
+    data.score = 0;
+    data.rank = 'standard';
 
     await docRef.set(data);
 
