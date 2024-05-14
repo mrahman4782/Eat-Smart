@@ -1,6 +1,8 @@
 import express from 'express';
 import { middlewareInit, logRequests, logSuccess, logFailure } from '../middleware/config.js';
 import dotenv from "dotenv";
+import cors from 'cors';
+
 dotenv.config({ path: "../.env" });
 
 import { initializeFirebaseApp } from './firebaseInit.js';
@@ -14,6 +16,7 @@ import { getMenu } from './getMenu.js';
 import { removeMenuItem } from './removeMenuItem.js';
 import { addMenuItem } from './addMenuItem.js';
 import { submitComplaint } from './submitComplaint.js';
+import { getImporters } from './getImporters.js';
 
 const app = express();
 const port = 3001;
@@ -22,8 +25,7 @@ middlewareInit(app);
 app.use(logRequests);
 app.use(logSuccess);
 app.use(logFailure);
-
-// Middleware to parse JSON bodies
+app.use(cors({ origin: 'http://localhost:3000' })); // Allow CORS for your frontend
 app.use(express.json());
 
 // Get functions
@@ -31,9 +33,14 @@ app.get('/', (req, res) => {
     res.status(200).send(`<h1>Successfully Connected to Server</h1>`);
 });
 
-// Post functions
+// Retrieve importers
+app.get('/api/importers', async (req, res) => {
+  let returnMessage = await getImporters();
+  console.log(returnMessage);
+  res.status(returnMessage.status).json(returnMessage.data);
+});
 
-// Manager deregister account
+// Post functions
 
 // Manager register account after approval
 app.post("/api/registerUser", async (req, res) => {
@@ -63,7 +70,6 @@ app.post("/api/requestAccount", async (req, res) => {
   let username = req.body.username || req.query.username;
   let deposit = req.body.deposit || req.query.deposit;
   let type = req.body.type || req.query.type;
-  
 
   let checkUserLogin = await requestAccount(email, password, username, deposit, type);
 
@@ -127,13 +133,27 @@ app.post("/api/submitComplaint", async (req, res) => {
   // Retrieve parameters from body
   let token = req.body.token || req.query.token;
   let complaintText = req.body.complaintText;
-  let selectedItems = req.body.selectedItems;
+  let importerId = req.body.importerId;
 
-  let returnMessage = await submitComplaint(token, complaintText, selectedItems);
+  let returnMessage = await submitComplaint(token, complaintText, importerId);
   console.log(returnMessage);
   res.status(returnMessage.status).send(returnMessage.data);
 });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+});
+
+// Importer submit a complaint about a chef
+app.post("/api/submitImporterComplaint", async (req, res) => {
+  console.log(req);
+
+  // Retrieve parameters from body
+  let token = req.body.token || req.query.token;
+  let complaintText = req.body.complaintText;
+  let chefId = req.body.chefId;
+
+  let returnMessage = await submitImporterComplaint(token, complaintText, chefId);
+  console.log(returnMessage);
+  res.status(returnMessage.status).send(returnMessage.data);
 });

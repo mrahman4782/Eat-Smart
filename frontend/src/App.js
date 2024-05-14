@@ -15,7 +15,8 @@ import Billing from "./pages/User/Billing";
 import FeedBack from "./pages/User/Feedback";
 import HandlingFeedbacks from "./pages/Manager/HandlingFeedbacks";
 import NutritionFacts from "./pages/Product/NutritionFacts";
-import Complain from "./pages/Chef/Complain";
+import ComplainChef from "./pages/Chef/Complain";
+import ComplainImporter from "./pages/Importer/Complain";
 
 function App() {
 
@@ -44,9 +45,11 @@ function App() {
         <Route path='/manager/handlingfeedbacks' element={<HandlingFeedbacks/>} /> //Not working
         
         // Chef
-        <Route path='/chef/complain' element={<Complain/>} />
-
+        <Route path='/chef/complain' element={<ComplainChef/>} />
+        <Route path='/importer/complain' element={<ComplainImporter/>} />
         
+
+
       </Routes>
     </Router>
   );

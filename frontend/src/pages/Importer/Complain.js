@@ -7,7 +7,7 @@ const Dropdown = ({ items, isOpen, toggleDropdown, onItemClick }) => (
       className="bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold py-2 px-4 rounded inline-flex items-center"
       onClick={toggleDropdown}
     >
-      <span className="mr-1">{isOpen ? "Select Importer" : "Importers"}</span>
+      <span className="mr-1">{isOpen ? "Select Chef" : "Chefs"}</span>
       <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
       </svg>
@@ -29,45 +29,38 @@ const Dropdown = ({ items, isOpen, toggleDropdown, onItemClick }) => (
   </div>
 );
 
-const ComplainChef = () => {
+const ComplainImporter = () => {
   const navigate = useNavigate();
-  const [importers, setImporters] = useState([]);
-  const [selectedImporter, setSelectedImporter] = useState(null);
+  const [chefs, setChefs] = useState([]);
+  const [selectedChef, setSelectedChef] = useState(null);
   const [complaintText, setComplaintText] = useState('');
   const [openDropdown, setOpenDropdown] = useState(false);
 
   useEffect(() => {
-    // Fetch importers from the API when the component mounts
-    const fetchImporters = async () => {
+    // Fetch chefs from the API when the component mounts
+    const fetchChefs = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/getUser', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ token: 'your-auth-token-here' }), // Replace with the actual token
-        });
+        const response = await fetch('http://localhost:3001/api/chefs');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        const importers = data.filter(user => user.accountType === 'importer');
-        console.log('Fetched importers:', importers); // Log fetched data
-        setImporters(importers);
+        console.log('Fetched chefs:', data); // Log fetched data
+        setChefs(data);
       } catch (error) {
-        console.error('Error fetching importers:', error);
+        console.error('Error fetching chefs:', error);
       }
     };
 
-    fetchImporters();
+    fetchChefs();
   }, []);
 
   const toggleDropdown = () => {
     setOpenDropdown(!openDropdown);
   };
 
-  const handleImporterClick = (importer) => {
-    setSelectedImporter(importer);
+  const handleChefClick = (chef) => {
+    setSelectedChef(chef);
     setOpenDropdown(false);
   };
 
@@ -76,11 +69,11 @@ const ComplainChef = () => {
   };
 
   const handleSendComplaint = async () => {
-    if (!selectedImporter || !complaintText.trim()) return;
+    if (!selectedChef || !complaintText.trim()) return;
 
     try {
       const token = 'your-auth-token-here'; // Replace with the actual token
-      const response = await fetch('http://localhost:3001/api/submitComplaint', {
+      const response = await fetch('http://localhost:3001/api/submitImporterComplaint', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +82,7 @@ const ComplainChef = () => {
         body: JSON.stringify({
           token,
           complaintText,
-          importerId: selectedImporter.id
+          chefId: selectedChef.id
         })
       });
 
@@ -105,21 +98,21 @@ const ComplainChef = () => {
     }
   };
 
-  const isSendComplaintDisabled = !selectedImporter || complaintText.trim() === '';
+  const isSendComplaintDisabled = !selectedChef || complaintText.trim() === '';
 
   return (
     <div className="flex flex-col w-full justify-center items-center h-screen dark:bg-gray-900 space-y-5">
       <div className="flex space-x-3">
         <Dropdown
-          items={importers}
+          items={chefs}
           isOpen={openDropdown}
           toggleDropdown={toggleDropdown}
-          onItemClick={handleImporterClick}
+          onItemClick={handleChefClick}
         />
       </div>
-      {selectedImporter && (
+      {selectedChef && (
         <div className="text-lg text-gray-800 dark:text-gray-300">
-          Selected Importer: {selectedImporter.name}
+          Selected Chef: {selectedChef.name}
         </div>
       )}
       <textarea
@@ -140,4 +133,4 @@ const ComplainChef = () => {
   );
 };
 
-export default ComplainChef;
+export default ComplainImporter;

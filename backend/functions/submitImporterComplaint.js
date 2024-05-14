@@ -4,21 +4,21 @@ import { initializeFirebaseApp } from './firebaseInit.js';
 
 initializeFirebaseApp();
 
-export const submitComplaint = async (session, complaintText, importerId) => {
+export const submitImporterComplaint = async (session, complaintText, chefId) => {
   const db = getFirestore();
   let response = {
     status: '',
     data: ''
   };
 
-  // Verify the user is logged in and is a Chef
+  // Verify the user is logged in and is an Importer
   let checkUserLogin = await retrieveUserData(session);
 
-  if (checkUserLogin.status === 200 && checkUserLogin.data.accountType === 'chef') {
+  if (checkUserLogin.status === 200 && checkUserLogin.data.accountType === 'importer') {
     try {
       await db.collection('complaints').add({
         complaintText,
-        importerId,
+        chefId,
         timestamp: new Date().toISOString()
       });
       response.status = 200;
