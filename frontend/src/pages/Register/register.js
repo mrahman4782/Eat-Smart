@@ -3,7 +3,7 @@ import { Box, TextField, Button, Grid, Typography, MenuItem, FormControl, Select
 import { useNavigate } from 'react-router-dom';
 import './register.css';
 import Message from '../../components/Message/message';
-import registerUser from '../../functions/registerUser';
+import registerRequest from '../../functions/registerRequest';
 
 const Register = () => {
     const [submitClicked, setSubmitClicked] = useState(false);
@@ -44,10 +44,9 @@ const Register = () => {
         setSubmitClicked(true);
         setError(null);
         try {
-            const response = await registerUser(username, email, password, initialDeposit, accountType);
+            const response = await registerRequest(username, email, password, initialDeposit, accountType);
             // Handle successful registration, e.g., navigate to confirmation page
             console.log(response);
-            navigate('/dashboard'); // Replace with the appropriate route
         } catch (error) {
             setError('Registration failed. Please check your details and try again.');
         }
@@ -56,7 +55,7 @@ const Register = () => {
     return (
         <Box sx={{ flexGrow: 1, height: '100vh', margin: 0 }}>
             <Grid container alignItems="center" justifyContent="center" style={{ height: '100%', margin: 0 }}>
-                <Message message="Hello" />
+                {error ? <Message message={error} /> : ''}
                 {!submitClicked ? 
                     <Grid item xs={12} sm={6} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#F9F6F0', margin: 0, height: '100vh'}}>
                         <Typography variant="h3" sx={{color: 'black', fontFamily: 'Juana-Light', marginTop: 13, marginRight: '22vw'}}>

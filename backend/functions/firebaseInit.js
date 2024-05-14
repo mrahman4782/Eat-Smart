@@ -1,14 +1,12 @@
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
 import dotenv from 'dotenv';
 dotenv.config({path: '../../.env'}); 
 
 export async function initializeFirebaseApp(){
     if (getApps().length === 0) {
-        const serviceAccount = await getServiceAccount();
+        const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT;
         initializeApp({
-            credential: cert(serviceAccount)
-        });
+        credential: cert(serviceAccount)
+    });
     }
 }
-

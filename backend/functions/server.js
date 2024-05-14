@@ -62,9 +62,9 @@ app.post("/api/requestAccount", async (req, res) => {
   let username = req.body.username || req.query.username;
   let deposit = req.body.deposit || req.query.deposit;
   let type = req.body.type || req.query.type;
-  let token = req.body.token || req.query.token;
+  
 
-  let checkUserLogin = await requestAccount(email, password, username, deposit, type, token);
+  let checkUserLogin = await requestAccount(email, password, username, deposit, type);
 
   console.log(checkUserLogin);
   res.status(checkUserLogin.status).send(`Registered request submitted!`);
@@ -117,7 +117,7 @@ app.post("/api/removeMenuItem", async (req, res) => {
   console.log(req);
   let token = req.body.token || req.query.token;
   let itemId = req.body.itemId || req.query.itemId;
-  let returnMessage = await addMenuItem(token, itemId);
+  let returnMessage = await removeMenuItem(token, itemId);
   console.log(returnMessage);
   res.status(returnMessage.status).send(returnMessage.data);
 });

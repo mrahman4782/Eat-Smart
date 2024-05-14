@@ -11,7 +11,8 @@ const ShowProduct = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/get-collection'); // Adjust the endpoint URL if needed
+        const response = await axios.post('http://localhost:3001/api/getMenu'); 
+        console.log(response);
         setProducts(response.data);
       } catch (error) {
         console.error('There was an error fetching the products!', error);
@@ -51,7 +52,7 @@ const ShowProduct = () => {
             onMouseLeave={() => setHoveredProduct(null)}
             onClick={() => handleProductClick(product)}
           >
-            <img src={product.image} alt="Product" className="h-80 w-72 object-cover rounded-t-xl cursor-pointer" />
+            <img src={`/menu/${product.name}.jpg`} alt="Product" className="h-80 w-72 object-cover rounded-t-xl cursor-pointer" />
             <div className="px-4 py-3 w-72">
               <span className="text-gray-400 mr-3 uppercase text-xs">{product.brand}</span>
               <p className="text-lg font-bold text-black truncate block capitalize">{product.name}</p>

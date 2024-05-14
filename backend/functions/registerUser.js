@@ -24,9 +24,10 @@ export async function createUser(email, password, username, deposit, type, token
     'orders': [],
     'rank': '',
     'score': '',
+    'salary': '',
     'type': '',
     'username': '',
-    'warnings': ''
+    'warnings': '',
   }
 
   try {

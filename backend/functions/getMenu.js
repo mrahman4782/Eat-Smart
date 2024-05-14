@@ -39,4 +39,4 @@ export async function getMenu() {
     return response;
   }
 
-console.log(await getMenu());
+//console.log(await getMenu());

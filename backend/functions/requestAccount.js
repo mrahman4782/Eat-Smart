@@ -12,7 +12,7 @@ let response = {
   data: ''
 }
 
-export async function requestAccount(email, password, username, deposit, type, token) {
+export async function requestAccount(email, password, username, deposit, type) {
 
   // Ensure that none of the fields are undefined
   if (email === undefined || password === undefined || username === undefined || deposit === undefined || type === undefined) {

@@ -1,4 +1,3 @@
-import express from 'express'; // Add this import
 import cors from 'cors';
 import morgan from 'morgan';
 import fs from 'fs';
