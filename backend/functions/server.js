@@ -17,6 +17,7 @@ import { removeMenuItem } from './removeMenuItem.js';
 import { addMenuItem } from './addMenuItem.js';
 import { submitComplaint } from './submitComplaint.js';
 import { getImporters } from './getImporters.js';
+import { getUserRequests} from './getUserRequests.js'
 
 const app = express();
 const port = 3001;
@@ -139,6 +140,17 @@ app.post("/api/submitComplaint", async (req, res) => {
   console.log(returnMessage);
   res.status(returnMessage.status).send(returnMessage.data);
 });
+
+
+// Manager request all account creations
+app.post("/api/getAllReqs", async (req, res) => {
+  console.log(req);
+  let returnMessage = await getUserRequests();
+  console.log(returnMessage);
+  res.status(returnMessage.status).send(returnMessage.data);
+});
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
