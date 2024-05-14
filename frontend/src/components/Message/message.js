@@ -11,9 +11,8 @@ const Message = ({ message, type = 'error', duration = 2 }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // After the specified duration, hide the message
       setIsVisible(false);
-    }, duration * 1000); // Convert duration from seconds to milliseconds
+    }, duration * 1000); 
 
     // Clean up the timer when the component unmounts or when duration changes
     return () => clearTimeout(timer);
