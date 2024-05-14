@@ -1,13 +1,13 @@
 import axios from "axios";
 import sessionStorage from './sessionStorage.js';
 
-export async function getUserInfo() {
+export async function createProduct(item) {
     try {
 
         let token = sessionStorage.sessionKey;
         // Make request to backend
-        const response = await axios.post(`http://localhost:3001/api/getUser`, { token: token});
-        console.log("Success!");
+        const response = await axios.post(`http://localhost:3001/api/addMenuItem`, { token: token, item: item});
+        console.log("Successfully made item!");
         return response;
 
     } catch (error) {
@@ -19,4 +19,4 @@ export async function getUserInfo() {
     }
 }
 
-export default getUserInfo;
+export default createProduct;

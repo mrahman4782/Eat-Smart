@@ -39,7 +39,7 @@ function App() {
         <Route path='/product/nutritionfacts' element={<NutritionFacts/>} />
         // User
         <Route path='/user/ordered' element={<Ordered/>} />
-        <Route path='/user/Profile' element={<Profile/>} />
+        <Route path='/user/profile' element={<Profile/>} />
         <Route path='/user/billing' element={<Billing/>} />
         <Route path='/user/feedback' element={<FeedBack/>} />
         <Route path='/manager/handlingfeedbacks' element={<HandlingFeedbacks/>} /> //Not working
