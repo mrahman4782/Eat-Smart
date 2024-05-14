@@ -140,7 +140,7 @@ const CreateProduct = () => {
   };
 
   return (
-    <div className="flex items-center justify-center p-12 h-screen overflow-y-auto mt-20">
+    <div className="flex items-center justify-center p-12 h-screen overflow-y-auto">
       <div className="mx-auto w-full max-w-[550px] bg-white mt-12 p-8 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-8 text-center">Create Special</h1>
         <form onSubmit={handleSubmit}>

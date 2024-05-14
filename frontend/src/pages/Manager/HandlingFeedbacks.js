@@ -6,10 +6,9 @@ const HandlingFeedbacks = () => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    // Fetch feedbacks from the API when the component mounts
     const fetchFeedbacks = async () => {
       try {
-        const response = await axios.get('https://your-backend-endpoint.com/feedbacks');
+        const response = await axios.get('http://localhost:3001/feedbacks'); // Adjust the endpoint URL if needed
         setFeedbacks(response.data);
       } catch (error) {
         console.error('There was an error fetching the feedbacks!', error);
@@ -21,13 +20,17 @@ const HandlingFeedbacks = () => {
 
   const handleApproval = async (feedbackId, decision) => {
     try {
-      const response = await axios.post(`https://your-backend-endpoint.com/feedbacks/${feedbackId}/decision`, {
+      const response = await axios.post(`http://localhost:3001/feedbacks/${feedbackId}/decision`, {
         decision: decision
       });
       console.log('Decision sent:', response.data);
-      // Move to the next feedback after sending the decision
-      if (index < feedbacks.length - 1) {
-        setIndex(index + 1);
+
+      // Remove the feedback from the list after the decision
+      setFeedbacks(feedbacks.filter(feedback => feedback.id !== feedbackId));
+
+      // Adjust the index if it goes out of bounds
+      if (index >= feedbacks.length - 1) {
+        setIndex(feedbacks.length - 2);
       }
     } catch (error) {
       console.error('There was an error sending the decision!', error);
@@ -77,7 +80,7 @@ const HandlingFeedbacks = () => {
       <div className="text-xl font-bold m-5 text-center">Use Keyboard Arrow Keys To Go Left And Right</div>
       <div className="HandlingFeedbacks border-2 rounded mx-auto m-5 bg-white" style={{ width: '750px' }}>
         <div className="top flex p-2 border-b select-none">
-          <div className="heading text-gray-800 w-full pl-3 font-semibold my-auto">{feedbacks[index].title}</div>
+          <div className="heading text-gray-800 w-full pl-3 font-semibold my-auto">{feedbacks[index].product.name}</div>
           <div className="buttons ml-auto flex text-gray-600 mr-1">
             <svg onClick={prevFrame} className="w-7 border-2 rounded-l-lg p-1 cursor-pointer border-r-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -93,13 +96,14 @@ const HandlingFeedbacks = () => {
               <div key={idx} className="each-frame border-box flex-none h-full" style={{ width: '750px' }}>
                 <div className="main flex w-full p-8">
                   <div className="sub w-4/6 my-auto">
-                    <img className="w-full p-8" src={feedback.imgSrc} alt={feedback.title} />
+                    <img className="w-full p-8" src={feedback.product.image} alt={feedback.product.name} />
                   </div>
                   <div className="sub w-full my-auto">
-                    <div className="head text-3xl font-bold mb-4">{feedback.title}</div>
-                    <div className="long-text text-lg">{feedback.description}</div>
-                    <div className="goto border border-gray-400 text-sm font-semibold inline-block mt-2 p-1 px-2 rounded cursor-pointer" onClick={() => handleApproval(feedback.id, 'approved')}>Approve</div>
-                    <div className="goto border border-gray-400 text-sm font-semibold inline-block mt-2 p-1 px-2 rounded cursor-pointer" onClick={() => handleApproval(feedback.id, 'disapproved')}>Disapprove</div>
+                    <div className="head text-3xl font-bold mb-4">{feedback.product.name}</div>
+                    <div className="text-xl font-semibold mb-2">Chef: {feedback.product.chef}</div>
+                    <div className="long-text text-lg">{feedback.product.description}</div>
+                    <div className="goto border border-gray-400 text-sm font-semibold inline-block mt-2 p-1 px-2 rounded cursor-pointer" onClick={() => handleApproval(feedback.id, 1)}>Approve</div>
+                    <div className="goto border border-gray-400 text-sm font-semibold inline-block mt-2 p-1 px-2 rounded cursor-pointer" onClick={() => handleApproval(feedback.id, 0)}>Disapprove</div>
                   </div>
                 </div>
               </div>

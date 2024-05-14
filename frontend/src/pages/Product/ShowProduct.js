@@ -11,7 +11,7 @@ const ShowProduct = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://your-backend-endpoint.com/products');
+        const response = await axios.get('http://localhost:3001/get-collection'); // Adjust the endpoint URL if needed
         setProducts(response.data);
       } catch (error) {
         console.error('There was an error fetching the products!', error);
@@ -26,7 +26,7 @@ const ShowProduct = () => {
   };
 
   const handleFeedbackClick = (product) => {
-    navigate('/user/feedback', { state: { productName: product.name } });
+    navigate('/user/feedback', { state: { productName: product.name, productId: product.id } });
   };
 
   const handleCaloriesClick = (product) => {

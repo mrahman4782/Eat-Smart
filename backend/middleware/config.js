@@ -1,11 +1,17 @@
+import express from 'express'; // Add this import
 import cors from 'cors';
 import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Define __dirname using import.meta.url
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Initialize middleware setup
 export const middlewareInit = (app) => {
-
     app.use(cors());
     app.use(express.json());
 }

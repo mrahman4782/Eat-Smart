@@ -6,7 +6,7 @@ const NutritionFacts = () => {
   const { nutritionFacts } = location.state || {};
 
   return (
-    <div className="bg-white rounded shadow-md max-w-xl mx-auto mt-20 p-4 ">
+    <div className="bg-white rounded shadow-md max-w-xl mx-auto mt-8 p-4">
       <div className="text-2xl font-bold mb-4">Nutrition Facts</div>
       <table className="table w-full border border-black border-collapse">
         <tbody>

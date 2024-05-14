@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const FeedBack = () => {
     const location = useLocation();
-    const { productName } = location.state || { productName: '' };
+    const { productName, productId } = location.state || { productName: '', productId: '' };
     const [rating, setRating] = useState(0);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -17,16 +17,19 @@ const FeedBack = () => {
         event.preventDefault();
         const data = {
             productName: productName,
+            productId: productId,
             rating: rating
         };
 
         try {
-            const response = await axios.post('https://your-backend-endpoint.com/feedback', data);
+            const response = await axios.post('http://localhost:3001/feedback', data); // Adjust the endpoint URL if needed
             setSuccess(true);
+            setError(null);
             console.log(response.data);
         } catch (error) {
             console.error('There was an error sending the feedback!', error);
             setError('There was an error sending your feedback. Please try again.');
+            setSuccess(false);
         }
 
         // Reset form after submission
@@ -34,7 +37,7 @@ const FeedBack = () => {
     };
 
     return (
-        <div className="max-w-xl mx-auto mt-20 flex w-full flex-col border rounded-lg bg-white p-8 ">
+        <div className="max-w-xl mx-auto mt-20 flex w-full flex-col border rounded-lg bg-white p-8">
             <h2 className="title-font mb-1 text-lg font-medium text-gray-900">Feedback</h2>
             <p className="mb-5 leading-relaxed text-gray-600">If you had any issues or you liked our product, please share with us!</p>
             <form onSubmit={handleSubmit}>
