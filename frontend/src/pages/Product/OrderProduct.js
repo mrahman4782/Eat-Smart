@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const foodData = [
   {
@@ -46,6 +47,7 @@ const Dropdown = ({ type, items, isOpen, toggleDropdown, onItemClick }) => (
 const OrderProduct = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
+  const navigate = useNavigate();
 
   const toggleDropdown = (type) => {
     setOpenDropdown(openDropdown === type ? null : type);
@@ -55,7 +57,7 @@ const OrderProduct = () => {
     if (!selectedItems.some(selectedItem => selectedItem.name === item)) {
       setSelectedItems((prevItems) => [
         ...prevItems,
-        { name: item, count: 1 }
+        { name: item, count: 1, price: Math.random() * 20 + 1 } // Assume a random price for simplicity
       ]);
     }
   };
@@ -78,6 +80,10 @@ const OrderProduct = () => {
         item.name === itemName && item.count > 1 ? { ...item, count: item.count - 1 } : item
       )
     );
+  };
+
+  const handleCheckout = () => {
+    navigate('/product/checkout', { state: { selectedItems } });
   };
 
   return (
@@ -132,7 +138,10 @@ const OrderProduct = () => {
         ))}
       </ul>
       {selectedItems.length > 0 && (
-        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">
+        <button 
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full"
+          onClick={handleCheckout}
+        >
           Pay Now
         </button>
       )}
