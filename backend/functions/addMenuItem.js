@@ -39,7 +39,7 @@ export async function addMenuItem(session, item) {
 
 // Example usage
 const newItem = {
-  name: "Fart",
+  name: "Bread",
   price: '16.99',
   calories: '400',
   carbs: '25',

@@ -3,6 +3,7 @@ import { initializeFirebaseApp } from './firebaseInit.js';
 
 initializeFirebaseApp();
 
+//Function to retrieve chefs information
 export const getChefs = async () => {
   const db = getFirestore();
   let response = {

@@ -3,6 +3,7 @@ import { initializeFirebaseApp } from './firebaseInit.js';
 
 initializeFirebaseApp();
 
+//Function to retrieve importers information
 export const getImporters = async () => {
   const db = getFirestore();
   let response = {

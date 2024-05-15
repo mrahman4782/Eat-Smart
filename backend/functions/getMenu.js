@@ -13,6 +13,7 @@ let response = {
   data: "",
 };
 
+//Function to retrieve the menu information
 export async function getMenu() {
     try {
       // Retrieve all items in the menu from Firestore
